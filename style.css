@@ -134,7 +134,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('https://m.media-amazon.com/images/M/MVBmMzU1NGI4NWItZTMyMi00YTZiLWE4YjAtNWY4NDM4NWY0OGE3XkEyXkFqcGc@._V1_.jpg') center 20%/cover no-repeat;
+    background: url('https://upload.wikimedia.org/wikipedia/en/7/78/Stranger_Things_season_4.png') center 20%/cover no-repeat;
     background-color: #050505;
 }
 
@@ -272,6 +272,7 @@ body {
     overflow-x: auto;
     padding: 10px 0;
     scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
 }
 
 .cards-scroller::-webkit-scrollbar {
@@ -355,7 +356,7 @@ body {
 
 .fullscreen-overlay.active {
     display: block;
-    animation: scaryGlitchShake 0.15s infinite alternate;
+    animation: scaryGlitchShake 0.12s infinite alternate;
 }
 
 /* Scary Prank Screen Overlay */
@@ -369,7 +370,7 @@ body {
 
 .prank-container.active {
     display: block;
-    animation: bloodFlicker 2s infinite;
+    animation: bloodFlicker 1.8s infinite;
 }
 
 /* Scary Red Vignette Glow */
@@ -377,7 +378,7 @@ body {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle, rgba(255, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.95) 80%);
+    background: radial-gradient(circle, rgba(255, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.95) 80%);
     pointer-events: none;
     z-index: 10000;
 }
@@ -387,15 +388,16 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0.8);
-    background: rgba(150, 0, 0, 0.9);
-    border: 2px solid var(--horror-red);
-    padding: 20px 40px;
-    border-radius: 8px;
-    box-shadow: 0 0 50px rgba(255, 0, 0, 0.9);
+    background: rgba(180, 0, 0, 0.95);
+    border: 3px solid var(--horror-red);
+    padding: 22px 35px;
+    border-radius: 12px;
+    box-shadow: 0 0 60px rgba(255, 0, 0, 1);
     transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 10002;
     opacity: 0;
     pointer-events: none;
+    text-align: center;
 }
 
 .toast-banner.show {
@@ -404,13 +406,13 @@ body {
 }
 
 .toast-text {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 900;
     color: #ffffff;
     text-transform: uppercase;
-    letter-spacing: 3px;
-    text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
-    white-space: nowrap;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px #ff0000, 0 0 25px #ff0000;
+    white-space: pre-line;
 }
 
 #confettiCanvas {
@@ -423,19 +425,19 @@ body {
 /* Scary Animations */
 @keyframes bloodFlicker {
     0%, 100% { background-color: #050000; }
-    50% { background-color: #1a0000; }
-    52% { background-color: #3d0000; }
-    54% { background-color: #050000; }
-    80% { background-color: #200000; }
+    48% { background-color: #200000; }
+    50% { background-color: #4a0000; }
+    52% { background-color: #050000; }
+    75% { background-color: #1a0000; }
 }
 
 @keyframes scaryGlitchShake {
     0% { transform: translate(0, 0) rotate(0deg); }
-    20% { transform: translate(-3px, 3px) rotate(-0.5deg); }
-    40% { transform: translate(3px, -2px) rotate(0.5deg); }
-    60% { transform: translate(-2px, -3px) rotate(-0.5deg); }
-    80% { transform: translate(3px, 1px) rotate(0.5deg); }
-    100% { transform: translate(1px, -2px) rotate(0deg); }
+    20% { transform: translate(-4px, 4px) rotate(-1deg); }
+    40% { transform: translate(4px, -3px) rotate(1deg); }
+    60% { transform: translate(-3px, -4px) rotate(-1deg); }
+    80% { transform: translate(4px, 2px) rotate(1deg); }
+    100% { transform: translate(2px, -3px) rotate(0deg); }
 }
 
 /* Footer */
