@@ -5,8 +5,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // ----------------------------------------------------
-    // Friend Photo Configuration
-    // Uses direct Imgur image source
+    // Friend Photo Configuration (Direct Imgur Link)
     // ----------------------------------------------------
     const FRIEND_PHOTO_URL = "https://i.imgur.com/yFHCK6h.jpg"; 
 
@@ -61,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
-    // Friend's photo (first item) + Scary GIFs
+    // Friend's photo + Scary Giphy GIFs
     const prankGifs = [
         FRIEND_PHOTO_URL,
         "https://media.giphy.com/media/8C6oF8EXJHaJzQmtH6/giphy.gif",
@@ -226,7 +225,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const el = document.createElement('div');
             el.className = 'multi-bouncer';
             
-            // Highlight friend photo with a larger size & red glowing border
             const isFriendPhoto = (index === 0);
             const baseSize = isFriendPhoto ? 250 : 180;
             const bouncerSize = isMobile ? Math.round(baseSize * 0.7) : baseSize;
@@ -244,14 +242,14 @@ document.addEventListener('DOMContentLoaded', () => {
             img.style.height = '100%';
             img.style.objectFit = 'cover';
             img.style.borderRadius = '16px';
-            img.style.border = isFriendPhoto ? '4px solid #ffffff' : 'none';
-            img.style.filter = 'drop-shadow(0 0 25px rgba(255, 0, 0, 1))';
+            img.style.border = isFriendPhoto ? '3px solid #ff0000' : 'none';
+            img.style.filter = 'drop-shadow(0 0 25px rgba(255, 0, 0, 0.9))';
 
             el.appendChild(img);
             prankContainer.appendChild(el);
 
-            const speedX = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 5 + 5);
-            const speedY = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 5 + 5);
+            const speedX = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 4 + 4);
+            const speedY = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 4 + 4);
 
             bouncers.push({
                 element: el,
@@ -309,12 +307,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             setTimeout(() => {
                 toastBanner.classList.remove('show');
-            }, 1800);
+            }, 2000);
         }
 
         triggerToast();
         clearInterval(toastInterval);
-        toastInterval = setInterval(triggerToast, 2400);
+        toastInterval = setInterval(triggerToast, 2800);
     }
 
     function exitPrankSequence() {
@@ -350,7 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', resizeCanvas);
 
     function createParticle() {
-        const colors = ['#ff0000', '#990000', '#660000', '#ff4d4d', '#000000', '#ffffff'];
+        const colors = ['#ff0000', '#990000', '#660000', '#ff4d4d', '#000000'];
         return {
             x: Math.random() * canvas.width,
             y: -20,
