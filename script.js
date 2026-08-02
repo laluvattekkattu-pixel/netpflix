@@ -6,9 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ----------------------------------------------------
     // Friend Photo Configuration
-    // Change "friend.jpg" to your friend's image file name or direct URL
+    // Uses explicit relative path "./friend.jpg"
+    // Make sure your file on GitHub is uploaded to the main root folder!
     // ----------------------------------------------------
-    const FRIEND_PHOTO_URL = "friend.jpg"; 
+    const FRIEND_PHOTO_URL = "./friend.jpg"; 
 
     // ----------------------------------------------------
     // 1. Dataset: High-Res Wikipedia Posters
@@ -61,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
-    // Friend's photo (first item) + Scary Giphy GIFs
+    // Friend's photo (first item) + Scary GIFs
     const prankGifs = [
         FRIEND_PHOTO_URL,
         "https://media.giphy.com/media/8C6oF8EXJHaJzQmtH6/giphy.gif",
@@ -226,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const el = document.createElement('div');
             el.className = 'multi-bouncer';
             
-            // Highlight your friend's photo with a larger size & red border
+            // Highlight friend photo with a larger size & red glowing border
             const isFriendPhoto = (index === 0);
             const baseSize = isFriendPhoto ? 240 : 180;
             const bouncerSize = isMobile ? Math.round(baseSize * 0.7) : baseSize;
@@ -246,6 +247,13 @@ document.addEventListener('DOMContentLoaded', () => {
             img.style.borderRadius = '16px';
             img.style.border = isFriendPhoto ? '3px solid #ff0000' : 'none';
             img.style.filter = 'drop-shadow(0 0 25px rgba(255, 0, 0, 0.9))';
+
+            // Error Fallback Handler
+            img.onerror = function() {
+                if (isFriendPhoto) {
+                    console.warn("Could not find local friend image. Check filename extension case on GitHub (e.g. friend.png vs friend.jpg).");
+                }
+            };
 
             el.appendChild(img);
             prankContainer.appendChild(el);
