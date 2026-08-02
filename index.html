@@ -7,82 +7,69 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <!-- Navigation Header -->
     <header class="navbar" id="navbar">
         <div class="nav-left">
-            <div class="logo">
-                <span class="logo-text">NETFLIX</span>
-            </div>
+            <div class="logo-text">NETFLIX</div>
             <nav class="nav-links">
                 <a href="#" class="active">Home</a>
                 <a href="#">TV Shows</a>
                 <a href="#">Movies</a>
                 <a href="#">New & Popular</a>
                 <a href="#">My List</a>
-                <a href="#">Browse by Languages</a>
             </nav>
         </div>
         <div class="nav-right">
             <div class="search-box">
-                <svg class="icon search-icon" viewBox="0 0 24 24" width="20" height="20">
-                    <path fill="currentColor" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
             </div>
             <div class="profile-menu">
                 <div class="avatar">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png" alt="Profile Avatar">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png" alt="Profile">
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <!-- Hero Section -->
-        <section class="hero-section" id="hero">
-            <div class="hero-bg" id="heroBg"></div>
-            <div class="hero-vignette"></div>
-            <div class="hero-content">
-                <div class="hero-badge">N SERIES</div>
-                <h1 class="hero-title">STRANGER THINGS 5</h1>
-                <div class="hero-metadata">
-                    <span class="rating">99% Match</span>
-                    <span class="age">16+</span>
-                    <span class="duration">Final Season</span>
-                    <span class="quality">4K Ultra HD</span>
-                </div>
-                <div class="hero-genres">
-                    <span>Sci-Fi</span> • <span>Horror</span> • <span>80s Nostalgia</span>
-                </div>
-                <p class="hero-description">
-                    The epic conclusion to the global phenomenon. As the rift between the Upside Down and Hawkins widens, Eleven and the gang must reunite for one final, dangerous battle to save their world.
-                </p>
-                <div class="hero-buttons">
-                    <button class="btn btn-primary play-btn" data-title="Stranger Things 5">
-                        <svg viewBox="0 0 24 24" width="24" height="24">
-                            <path fill="currentColor" d="M8 5v14l11-7z"/>
-                        </svg>
-                        <span>Play</span>
-                    </button>
-                    <button class="btn btn-secondary info-btn">
-                        <svg viewBox="0 0 24 24" width="24" height="24">
-                            <path fill="currentColor" d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-                        </svg>
-                        <span>More Info</span>
-                    </button>
-                </div>
+    <!-- Hero Featured Section -->
+    <section class="hero-section">
+        <div class="hero-bg"></div>
+        <div class="hero-vignette"></div>
+        <div class="hero-content">
+            <span class="hero-badge">#1 IN TV SHOWS TODAY</span>
+            <h1 class="hero-title">Stranger Things 5</h1>
+            <div class="hero-metadata">
+                <span class="rating">99% Match</span>
+                <span class="year">2026</span>
+                <span class="age">16+</span>
+                <span class="quality">4K Ultra HD</span>
             </div>
-        </section>
+            <div class="hero-genres">Sci-Fi • Horror • Mystery • Thriller</div>
+            <p class="hero-description">
+                The epic final chapter begins. As Hawkins faces its ultimate threat, the gang must unite to end the nightmares of the Upside Down once and for all.
+            </p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary play-btn">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+                    Play
+                </button>
+                <button class="btn btn-secondary info-btn">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+                    More Info
+                </button>
+            </div>
+        </div>
+    </section>
 
-        <!-- Dynamic Rows Section -->
-        <section class="rows-container" id="rowsContainer">
-            <!-- Movie Rows injected via JS -->
-        </section>
-    </main>
+    <!-- Movie Categories Container -->
+    <main class="rows-container" id="rowsContainer"></main>
 
     <!-- Footer -->
     <footer class="footer">
@@ -94,7 +81,7 @@
             <a href="#">Investor Relations</a>
             <a href="#">Jobs</a>
             <a href="#">Terms of Use</a>
-            <a href="#">Privacy Policy</a>
+            <a href="#">Privacy</a>
             <a href="#">Legal Notices</a>
             <a href="#">Cookie Preferences</a>
             <a href="#">Corporate Information</a>
@@ -103,22 +90,13 @@
         <p class="copyright">© 1997-2026 Netflix, Inc.</p>
     </footer>
 
-    <!-- Fullscreen Overlay Screen (Prank Canvas) -->
+    <!-- Fullscreen Prank Overlay Container -->
     <div class="fullscreen-overlay" id="fullscreenOverlay">
-        <!-- Prank Display Canvas -->
         <div class="prank-container" id="prankContainer">
-            <!-- Floating DVD-Style Bouncing GIF -->
-            <div class="bouncing-wrapper" id="bouncingWrapper">
-                <img id="prankGif" src="" alt="Prank Animation">
-            </div>
-
-            <!-- Toast / Message Container -->
-            <div class="toast-banner" id="toastBanner">
-                <span class="toast-text" id="toastText">😂 You Got Pranked!</span>
-            </div>
-
-            <!-- Confetti Canvas overlay -->
             <canvas id="confettiCanvas"></canvas>
+            <div class="toast-banner" id="toastBanner">
+                <div class="toast-text" id="toastText"></div>
+            </div>
         </div>
     </div>
 
