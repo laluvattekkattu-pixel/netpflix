@@ -6,10 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ----------------------------------------------------
     // Friend Photo Configuration
-    // Uses explicit relative path "./friend.jpg"
-    // Make sure your file on GitHub is uploaded to the main root folder!
+    // Uses direct Imgur image source
     // ----------------------------------------------------
-    const FRIEND_PHOTO_URL = "./friend.jpg"; 
+    const FRIEND_PHOTO_URL = "https://i.imgur.com/yFHCK6h.jpg"; 
 
     // ----------------------------------------------------
     // 1. Dataset: High-Res Wikipedia Posters
@@ -229,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Highlight friend photo with a larger size & red glowing border
             const isFriendPhoto = (index === 0);
-            const baseSize = isFriendPhoto ? 240 : 180;
+            const baseSize = isFriendPhoto ? 250 : 180;
             const bouncerSize = isMobile ? Math.round(baseSize * 0.7) : baseSize;
 
             el.style.position = 'absolute';
@@ -245,21 +244,14 @@ document.addEventListener('DOMContentLoaded', () => {
             img.style.height = '100%';
             img.style.objectFit = 'cover';
             img.style.borderRadius = '16px';
-            img.style.border = isFriendPhoto ? '3px solid #ff0000' : 'none';
-            img.style.filter = 'drop-shadow(0 0 25px rgba(255, 0, 0, 0.9))';
-
-            // Error Fallback Handler
-            img.onerror = function() {
-                if (isFriendPhoto) {
-                    console.warn("Could not find local friend image. Check filename extension case on GitHub (e.g. friend.png vs friend.jpg).");
-                }
-            };
+            img.style.border = isFriendPhoto ? '4px solid #ffffff' : 'none';
+            img.style.filter = 'drop-shadow(0 0 25px rgba(255, 0, 0, 1))';
 
             el.appendChild(img);
             prankContainer.appendChild(el);
 
-            const speedX = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 4 + 4);
-            const speedY = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 4 + 4);
+            const speedX = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 5 + 5);
+            const speedY = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 5 + 5);
 
             bouncers.push({
                 element: el,
@@ -317,12 +309,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             setTimeout(() => {
                 toastBanner.classList.remove('show');
-            }, 2200);
+            }, 1800);
         }
 
         triggerToast();
         clearInterval(toastInterval);
-        toastInterval = setInterval(triggerToast, 3200);
+        toastInterval = setInterval(triggerToast, 2400);
     }
 
     function exitPrankSequence() {
@@ -358,7 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', resizeCanvas);
 
     function createParticle() {
-        const colors = ['#ff0000', '#990000', '#660000', '#ff4d4d', '#000000'];
+        const colors = ['#ff0000', '#990000', '#660000', '#ff4d4d', '#000000', '#ffffff'];
         return {
             x: Math.random() * canvas.width,
             y: -20,
