@@ -1,384 +1,479 @@
-/**
- * Netflix Web Experience & Multi-GIF Bouncing Prank Mode
- */
+:root {
+    --bg-primary: #141414;
+    --bg-secondary: #1f1f1f;
+    --accent-red: #e50914;
+    --horror-red: #ff0000;
+    --text-main: #ffffff;
+    --text-muted: #aaaaaa;
+    --card-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
+    --nav-height: 68px;
+}
 
-document.addEventListener('DOMContentLoaded', () => {
-    // ----------------------------------------------------
-    // 1. Dataset: Guaranteed Permanent High-Res Posters
-    // ----------------------------------------------------
-    const movieCategories = [
-        {
-            category: "Trending Now",
-            movies: [
-                { title: "Dune: Part Two", rating: "98% Match", age: "13+", img: "https://upload.wikimedia.org/wikipedia/en/b/b5/Dune_Part_Two_poster.jpeg" },
-                { title: "Deadpool & Wolverine", rating: "96% Match", age: "18+", img: "https://upload.wikimedia.org/wikipedia/en/4/4c/Deadpool_%26_Wolverine_poster.jpg" },
-                { title: "Oppenheimer", rating: "99% Match", age: "18+", img: "https://upload.wikimedia.org/wikipedia/en/4/4a/Oppenheimer_%28film%29.jpg" },
-                { title: "Interstellar", rating: "97% Match", age: "13+", img: "https://upload.wikimedia.org/wikipedia/en/b/bc/Interstellar_film_poster.jpg" }
-            ]
-        },
-        {
-            category: "Upcoming & Highly Anticipated",
-            movies: [
-                { title: "Stranger Things 5", rating: "99% Match", age: "16+", img: "https://upload.wikimedia.org/wikipedia/en/7/78/Stranger_Things_season_4.png" },
-                { title: "Spider-Man: Across the Spider-Verse", rating: "98% Match", age: "PG", img: "https://upload.wikimedia.org/wikipedia/en/b/b4/Spider-Man-_Across_the_Spider-Verse_poster.jpg" },
-                { title: "Avatar: The Way of Water", rating: "97% Match", age: "13+", img: "https://upload.wikimedia.org/wikipedia/en/5/54/Avatar_The_Way_of_Water_poster.jpg" },
-                { title: "The Batman", rating: "95% Match", age: "16+", img: "https://upload.wikimedia.org/wikipedia/en/f/ff/The_Batman_%28film%29_poster.jpg" }
-            ]
-        },
-        {
-            category: "Action & Blockbusters",
-            movies: [
-                { title: "The Dark Knight", rating: "99% Match", age: "13+", img: "https://upload.wikimedia.org/wikipedia/en/1/1c/The_Dark_Knight_%282008_film%29.jpg" },
-                { title: "Mission: Impossible - Dead Reckoning", rating: "94% Match", age: "13+", img: "https://upload.wikimedia.org/wikipedia/en/e/ed/Mission_-_Impossible_%E2%80%93_Dead_Reckoning_Part_One_poster.jpg" },
-                { title: "John Wick: Chapter 4", rating: "95% Match", age: "18+", img: "https://upload.wikimedia.org/wikipedia/en/d/d0/John_Wick_-_Chapter_4_promotional_poster.jpg" },
-                { title: "Top Gun: Maverick", rating: "97% Match", age: "13+", img: "https://upload.wikimedia.org/wikipedia/en/1/13/Top_Gun_Maverick_Poster.jpg" }
-            ]
-        },
-        {
-            category: "Sci-Fi & Cyberpunk Classics",
-            movies: [
-                { title: "Blade Runner 2049", rating: "93% Match", age: "18+", img: "https://upload.wikimedia.org/wikipedia/en/9/9b/Blade_Runner_2049_poster.png" },
-                { title: "The Matrix", rating: "98% Match", age: "16+", img: "https://upload.wikimedia.org/wikipedia/en/c/c1/The_Matrix_Poster.jpg" },
-                { title: "Inception", rating: "97% Match", age: "13+", img: "https://upload.wikimedia.org/wikipedia/en/2/2e/Inception_%282010%29_theatrical_poster.jpg" },
-                { title: "Cyberpunk: Edgerunners", rating: "96% Match", age: "18+", img: "https://upload.wikimedia.org/wikipedia/en/1/12/Cyberpunk_Edgerunners_poster.jpg" }
-            ]
-        },
-        {
-            category: "Top TV Series",
-            movies: [
-                { title: "Breaking Bad", rating: "99% Match", age: "18+", img: "https://upload.wikimedia.org/wikipedia/en/6/61/Breaking_Bad_title_card.png" },
-                { title: "The Last of Us", rating: "96% Match", age: "18+", img: "https://upload.wikimedia.org/wikipedia/en/4/46/The_Last_of_Us_season_1_poster.jpg" },
-                { title: "Wednesday", rating: "95% Match", age: "13+", img: "https://upload.wikimedia.org/wikipedia/en/2/25/Wednesday_Netflix_series_poster.jpg" },
-                { title: "Squid Game", rating: "94% Match", age: "18+", img: "https://upload.wikimedia.org/wikipedia/en/d/d7/Squid_Game_title_card.jpg" }
-            ]
-        }
-    ];
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
 
-    // Cleaned Permanent Giphy URLs
-    const prankGifs = [
-        "https://media.giphy.com/media/8C6oF8EXJHaJzQmtH6/giphy.gif",
-        "https://media.giphy.com/media/05WdBm6EqtJKprcUt4/giphy.gif",
-        "https://media.giphy.com/media/e9O3l1wHTvcNbBY4SN/giphy.gif",
-        "https://media.giphy.com/media/TC46tIxvGtSmbvTOl9/giphy.gif",
-        "https://media.giphy.com/media/BcX3ubwiEIZ89Vd0Ju/giphy.gif"
-    ];
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    overflow-x: hidden;
+    min-height: 100vh;
+}
 
-    // Funny Prank Messages
-    const funnyMessages = [
-        "😂 You Got Pranked!",
-        "Curiosity Level: 999%",
-        "Achievement Unlocked: Master Gullible",
-        "No Show Found. Only Chaos!",
-        "Your Snacks Have Been Detected 🍿",
-        "Your Friend Sent You Here 😂"
-    ];
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
 
-    // ----------------------------------------------------
-    // 2. Multi-Track Audio Engine Setup
-    // ----------------------------------------------------
-    const tracksConfig = [
-        { file: 'music.mp3',  volume: 0.3 },
-        { file: 'meme.mp3',   volume: 1.0 },
-        { file: 'sound3.mp3', volume: 0.8 },
-        { file: 'sound4.mp3', volume: 0.9 }
-    ];
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
 
-    const prankTracks = tracksConfig.map(track => {
-        const audio = new Audio(track.file);
-        audio.loop = true;
-        audio.volume = track.volume;
-        return audio;
-    });
+::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+}
 
-    function playAudioTracks() {
-        prankTracks.forEach(track => {
-            track.currentTime = 0;
-            track.play().catch(err => console.log("Audio play error:", err));
-        });
-    }
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-red);
+}
 
-    function stopAudioTracks() {
-        prankTracks.forEach(track => {
-            track.pause();
-            track.currentTime = 0;
-        });
-    }
+/* Navigation Header */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--nav-height);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 4%;
+    z-index: 1000;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+    transition: background-color 0.4s ease;
+}
 
-    // ----------------------------------------------------
-    // 3. Render Movie Cards
-    // ----------------------------------------------------
-    const rowsContainer = document.getElementById('rowsContainer');
+.navbar.scrolled {
+    background-color: #141414;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
 
-    movieCategories.forEach(cat => {
-        const rowElement = document.createElement('div');
-        rowElement.className = 'movie-row';
-        
-        const titleElement = document.createElement('h2');
-        titleElement.className = 'row-header';
-        titleElement.textContent = cat.category;
-        rowElement.appendChild(titleElement);
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+}
 
-        const scroller = document.createElement('div');
-        scroller.className = 'cards-scroller';
+.logo-text {
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    color: var(--accent-red);
+}
 
-        cat.movies.forEach(movie => {
-            const card = document.createElement('div');
-            card.className = 'movie-card';
-            card.innerHTML = `
-                <img src="${movie.img}" alt="${movie.title}" loading="lazy" onerror="this.onerror=null; this.src='https://picsum.photos/seed/${encodeURIComponent(movie.title)}/300/450';">
-                <div class="card-overlay">
-                    <div class="card-title">${movie.title}</div>
-                    <div class="card-meta">
-                        <span>${movie.rating}</span>
-                        <span>${movie.age}</span>
-                    </div>
-                    <button class="card-btn play-btn" data-title="${movie.title}" aria-label="Play">
-                        <svg viewBox="0 0 24 24" width="20" height="20">
-                            <path fill="currentColor" d="M8 5v14l11-7z"/>
-                        </svg>
-                    </button>
-                </div>
-            `;
-            scroller.appendChild(card);
-        });
+.nav-links {
+    display: flex;
+    gap: 18px;
+}
 
-        rowElement.appendChild(scroller);
-        rowsContainer.appendChild(rowElement);
-    });
+.nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
 
-    // Navbar Scroll Background Effect
-    window.addEventListener('scroll', () => {
-        const navbar = document.getElementById('navbar');
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
+.nav-links a:hover, .nav-links a.active {
+    color: var(--text-main);
+}
 
-    // ----------------------------------------------------
-    // 4. Instant Prank Launch Handler (Nav, Play, & Cards)
-    // ----------------------------------------------------
-    const fullscreenOverlay = document.getElementById('fullscreenOverlay');
-    const prankContainer = document.getElementById('prankContainer');
-    
-    let dvdAnimFrame = null;
-    let toastInterval = null;
-    let bouncers = [];
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
 
-    // Trigger prank on ANY interactive element click (TV Shows, Movies, Play buttons, etc.)
-    document.addEventListener('click', (e) => {
-        const playBtn = e.target.closest('.play-btn');
-        const navLink = e.target.closest('.nav-links a');
-        const movieCard = e.target.closest('.movie-card');
-        const searchBox = e.target.closest('.search-box');
-        const avatar = e.target.closest('.profile-menu');
-        const heroInfoBtn = e.target.closest('.info-btn');
+.search-box {
+    cursor: pointer;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 50%;
+}
 
-        if (playBtn || navLink || movieCard || searchBox || avatar || heroInfoBtn) {
-            e.preventDefault(); // Prevent standard page navigation
-            startPrankSequence();
-        }
-    });
+.avatar img {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    cursor: pointer;
+}
 
-    // ESC Key Exit Listener
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && fullscreenOverlay.classList.contains('active')) {
-            exitPrankSequence();
-        }
-    });
+/* Hero Section */
+.hero-section {
+    position: relative;
+    height: 80vh;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    padding: 0 4%;
+    overflow: hidden;
+}
 
-    function startPrankSequence() {
-        if (document.documentElement.requestFullscreen) {
-            document.documentElement.requestFullscreen().catch(() => {});
-        }
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://upload.wikimedia.org/wikipedia/en/7/78/Stranger_Things_season_4.png') center 20%/cover no-repeat;
+    background-color: #050505;
+}
 
-        fullscreenOverlay.classList.add('active');
-        prankContainer.classList.add('active');
-        
-        playAudioTracks();
-        startConfetti();
-        initMultipleBouncingGifs();
-        startToastMessages();
-    }
+.hero-vignette {
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(circle at 75% 40%, rgba(20, 20, 20, 0.1) 0%, var(--bg-primary) 85%),
+        linear-gradient(180deg, rgba(20, 20, 20, 0.3) 0%, var(--bg-primary) 100%);
+}
 
-    // ----------------------------------------------------
-    // 5. Multi-GIF Bouncing Physics System (5 Independent GIFs)
-    // ----------------------------------------------------
-    function initMultipleBouncingGifs() {
-        const bouncingWrapper = document.getElementById('bouncingWrapper');
-        if (bouncingWrapper) bouncingWrapper.style.display = 'none';
+.hero-content {
+    position: relative;
+    z-index: 10;
+    max-width: 600px;
+    animation: fadeInUp 0.8s ease-out;
+}
 
-        document.querySelectorAll('.multi-bouncer').forEach(el => el.remove());
+.hero-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background: var(--accent-red);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 3px;
+    margin-bottom: 12px;
+}
 
-        bouncers = [];
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 14px;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.8);
+}
 
-        prankGifs.forEach((gifUrl) => {
-            const el = document.createElement('div');
-            el.className = 'multi-bouncer';
-            el.style.position = 'absolute';
-            el.style.width = '200px';
-            el.style.height = '200px';
-            el.style.pointerEvents = 'none';
-            el.style.willChange = 'transform';
-            el.style.zIndex = '10001';
+.hero-metadata {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    margin-bottom: 12px;
+}
 
-            const img = document.createElement('img');
-            img.src = gifUrl;
-            img.style.width = '100%';
-            img.style.height = '100%';
-            img.style.objectFit = 'contain';
-            img.style.borderRadius = '12px';
+.rating {
+    color: #46d369;
+    font-weight: 700;
+}
 
-            el.appendChild(img);
-            prankContainer.appendChild(el);
+.age, .quality {
+    border: 1px solid var(--text-muted);
+    padding: 1px 5px;
+    border-radius: 2px;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
 
-            const speedX = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 3 + 3);
-            const speedY = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 3 + 3);
+.hero-genres {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-bottom: 14px;
+}
 
-            bouncers.push({
-                element: el,
-                x: Math.random() * (window.innerWidth - 220),
-                y: Math.random() * (window.innerHeight - 220),
-                vx: speedX,
-                vy: speedY,
-                width: 200,
-                height: 200
-            });
-        });
+.hero-description {
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: #cccccc;
+    margin-bottom: 24px;
+}
 
-        function animateAllGifs() {
-            const screenW = window.innerWidth;
-            const screenH = window.innerHeight;
+.hero-buttons {
+    display: flex;
+    gap: 12px;
+}
 
-            bouncers.forEach(b => {
-                b.x += b.vx;
-                b.y += b.vy;
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
 
-                if (b.x <= 0) {
-                    b.x = 0;
-                    b.vx = Math.abs(b.vx);
-                } else if (b.x + b.width >= screenW) {
-                    b.x = screenW - b.width;
-                    b.vx = -Math.abs(b.vx);
-                }
+.btn-primary {
+    background-color: var(--text-main);
+    color: #000;
+}
 
-                if (b.y <= 0) {
-                    b.y = 0;
-                    b.vy = Math.abs(b.vy);
-                } else if (b.y + b.height >= screenH) {
-                    b.y = screenH - b.height;
-                    b.vy = -Math.abs(b.vy);
-                }
+.btn-primary:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+    transform: scale(1.03);
+}
 
-                b.element.style.transform = `translate3d(${b.x}px, ${b.y}px, 0)`;
-            });
+.btn-secondary {
+    background-color: rgba(109, 109, 110, 0.7);
+    color: var(--text-main);
+}
 
-            dvdAnimFrame = requestAnimationFrame(animateAllGifs);
-        }
+.btn-secondary:hover {
+    background-color: rgba(109, 109, 110, 0.4);
+    transform: scale(1.03);
+}
 
-        cancelAnimationFrame(dvdAnimFrame);
-        dvdAnimFrame = requestAnimationFrame(animateAllGifs);
-    }
+/* Movie Rows Section */
+.rows-container {
+    padding-bottom: 40px;
+    margin-top: -40px;
+    position: relative;
+    z-index: 20;
+}
 
-    function startToastMessages() {
-        const toastBanner = document.getElementById('toastBanner');
-        const toastText = document.getElementById('toastText');
-        
-        function triggerToast() {
-            const randomMsg = funnyMessages[Math.floor(Math.random() * funnyMessages.length)];
-            toastText.textContent = randomMsg;
-            toastBanner.classList.add('show');
+.movie-row {
+    margin-bottom: 35px;
+    padding: 0 4%;
+}
 
-            setTimeout(() => {
-                toastBanner.classList.remove('show');
-            }, 2500);
-        }
+.row-header {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #e5e5e5;
+}
 
-        triggerToast();
-        clearInterval(toastInterval);
-        toastInterval = setInterval(triggerToast, 4500);
-    }
+.cards-scroller {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 10px 0;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
 
-    function exitPrankSequence() {
-        fullscreenOverlay.classList.remove('active');
-        prankContainer.classList.remove('active');
-        
-        stopAudioTracks();
+.cards-scroller::-webkit-scrollbar {
+    display: none;
+}
 
-        document.querySelectorAll('.multi-bouncer').forEach(el => el.remove());
+/* Movie Card */
+.movie-card {
+    flex: 0 0 190px;
+    height: 285px;
+    position: relative;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: var(--bg-secondary);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: var(--card-shadow);
+}
 
-        clearInterval(toastInterval);
-        cancelAnimationFrame(dvdAnimFrame);
-        stopConfetti();
+.movie-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
-        if (document.fullscreenElement) {
-            document.exitFullscreen().catch(() => {});
-        }
-    }
+.card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(20, 20, 20, 0.95) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 12px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
 
-    // ----------------------------------------------------
-    // 6. Confetti Particle System
-    // ----------------------------------------------------
-    const canvas = document.getElementById('confettiCanvas');
-    const ctx = canvas.getContext('2d');
-    let confettiParticles = [];
-    let confettiAnimFrame = null;
+.card-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
 
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
+.card-meta {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    display: flex;
+    gap: 6px;
+    margin-bottom: 10px;
+}
 
-    window.addEventListener('resize', resizeCanvas);
+.card-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--accent-red);
+    color: #fff;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-    function createParticle() {
-        const colors = ['#e50914', '#8a2be2', '#00f0ff', '#ffe600', '#ffffff'];
-        return {
-            x: Math.random() * canvas.width,
-            y: -20,
-            size: Math.random() * 10 + 5,
-            color: colors[Math.floor(Math.random() * colors.length)],
-            speedY: Math.random() * 5 + 3,
-            speedX: (Math.random() - 0.5) * 4,
-            rotation: Math.random() * 360,
-            rotSpeed: (Math.random() - 0.5) * 10
-        };
-    }
+.movie-card:hover {
+    transform: scale(1.08);
+    z-index: 100;
+}
 
-    function startConfetti() {
-        resizeCanvas();
-        confettiParticles = Array.from({ length: 80 }, createParticle);
-        
-        function render() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+.movie-card:hover .card-overlay {
+    opacity: 1;
+}
 
-            confettiParticles.forEach((p, index) => {
-                p.y += p.speedY;
-                p.x += p.speedX;
-                p.rotation += p.rotSpeed;
+/* Fullscreen Overlay Container */
+.fullscreen-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: #000;
+    z-index: 9999;
+    display: none;
+}
 
-                ctx.save();
-                ctx.translate(p.x, p.y);
-                ctx.rotate((p.rotation * Math.PI) / 180);
-                ctx.fillStyle = p.color;
-                ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
-                ctx.restore();
+.fullscreen-overlay.active {
+    display: block;
+    animation: scaryGlitchShake 0.12s infinite alternate;
+}
 
-                if (p.y > canvas.height + 20) {
-                    confettiParticles[index] = createParticle();
-                }
-            });
+/* Scary Prank Screen Overlay */
+.prank-container {
+    position: absolute;
+    inset: 0;
+    display: none;
+    overflow: hidden;
+    background: #050000;
+}
 
-            confettiAnimFrame = requestAnimationFrame(render);
-        }
+.prank-container.active {
+    display: block;
+    animation: bloodFlicker 1.8s infinite;
+}
 
-        cancelAnimationFrame(confettiAnimFrame);
-        confettiAnimFrame = requestAnimationFrame(render);
-    }
+/* Scary Red Vignette Glow */
+.prank-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(255, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.95) 80%);
+    pointer-events: none;
+    z-index: 10000;
+}
 
-    function stopConfetti() {
-        cancelAnimationFrame(confettiAnimFrame);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
-});
+.toast-banner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background: rgba(180, 0, 0, 0.95);
+    border: 3px solid var(--horror-red);
+    padding: 22px 35px;
+    border-radius: 12px;
+    box-shadow: 0 0 60px rgba(255, 0, 0, 1);
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 10002;
+    opacity: 0;
+    pointer-events: none;
+    text-align: center;
+}
+
+.toast-banner.show {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 1;
+}
+
+.toast-text {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px #ff0000, 0 0 25px #ff0000;
+    white-space: pre-line;
+}
+
+#confettiCanvas {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10001;
+}
+
+/* Scary Animations */
+@keyframes bloodFlicker {
+    0%, 100% { background-color: #050000; }
+    48% { background-color: #200000; }
+    50% { background-color: #4a0000; }
+    52% { background-color: #050000; }
+    75% { background-color: #1a0000; }
+}
+
+@keyframes scaryGlitchShake {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    20% { transform: translate(-4px, 4px) rotate(-1deg); }
+    40% { transform: translate(4px, -3px) rotate(1deg); }
+    60% { transform: translate(-3px, -4px) rotate(-1deg); }
+    80% { transform: translate(4px, 2px) rotate(1deg); }
+    100% { transform: translate(2px, -3px) rotate(0deg); }
+}
+
+/* Footer */
+.footer {
+    padding: 40px 4% 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: var(--bg-primary);
+}
+
+.footer-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.footer-links a {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    text-decoration: none;
+}
+
+.copyright {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.75rem;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hero-title { font-size: 2.2rem; }
+    .movie-card { flex: 0 0 130px; height: 195px; }
+    .toast-text { font-size: 1.2rem; }
+}
