@@ -5,12 +5,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // ----------------------------------------------------
-    // Prank Configuration
-    // ----------------------------------------------------
-    const YOUR_NAME = "Ishan Dev";                  
-    const YOUR_INSTAGRAM_HANDLE = "@ishann.exe_u";   
-
-    // ----------------------------------------------------
     // 1. Dataset: High-Res Wikipedia Posters
     // ----------------------------------------------------
     const movieCategories = [
@@ -70,15 +64,14 @@ document.addEventListener('DOMContentLoaded', () => {
         "https://media.giphy.com/media/BcX3ubwiEIZ89Vd0Ju/giphy.gif"
     ];
 
-    // Creepy Personal Jumpscare Messages
+    // Scary Center Screen Messages
     const scaryMessages = [
-        `😈 PRANKED BY ${YOUR_NAME}!`,
-        `📸 Follow IG: ${YOUR_INSTAGRAM_HANDLE}`,
         `⚠️ SYSTEM COMPROMISED!`,
         `💀 NO MOVIE FOR YOU TODAY!`,
         `👁️ WE ARE WATCHING YOU...`,
         `🏃 RUN WHILE YOU CAN!`,
-        `🔥 GOT YOU GOOD! IG: ${YOUR_INSTAGRAM_HANDLE}`
+        `🚨 ERROR 404: MOVIE NOT FOUND`,
+        `🍿 YOUR SNACKS ARE OURS NOW!`
     ];
 
     // ----------------------------------------------------
@@ -210,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----------------------------------------------------
-    // 5. Multi-GIF Bouncing Physics System (Scary Mode)
+    // 5. Multi-GIF Bouncing Physics System
     // ----------------------------------------------------
     function initMultipleBouncingGifs() {
         const bouncingWrapper = document.getElementById('bouncingWrapper');
