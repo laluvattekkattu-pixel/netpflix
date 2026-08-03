@@ -87,38 +87,42 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     // ----------------------------------------------------
-    // 2. Multi-Track Audio Engine Setup (PC & Mobile Universal Fix)
+    // 2. High-Priority Audio Engine
     // ----------------------------------------------------
-    const tracksConfig = [
-        { file: 'music.mp3',  volume: 0.6 },
-        { file: 'meme.mp3',   volume: 1.0 },
-        { file: 'sound3.mp3', volume: 0.8 },
-        { file: 'sound4.mp3', volume: 0.9 }
-    ];
+    const soundFiles = ['music.mp3', 'meme.mp3', 'sound3.mp3', 'sound4.mp3'];
+    let audioElements = [];
 
-    const prankTracks = tracksConfig.map(track => {
-        const audio = new Audio(track.file);
-        audio.loop = true;
-        audio.volume = track.volume;
-        return audio;
-    });
+    function initAudio() {
+        audioElements = soundFiles.map(file => {
+            const a = new Audio();
+            a.src = file;
+            a.loop = true;
+            a.autoplay = false;
+            a.preload = 'auto';
+            return a;
+        });
+    }
+    
+    initAudio();
 
     function playAudioTracks() {
-        prankTracks.forEach(track => {
-            track.currentTime = 0;
-            const playPromise = track.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                    console.log("Audio playback blocked:", error);
+        audioElements.forEach(a => {
+            a.currentTime = 0;
+            const promise = a.play();
+            if (promise !== undefined) {
+                promise.catch(err => {
+                    console.log("Audio play error, retrying...", err);
+                    // Retry trigger
+                    setTimeout(() => a.play(), 100);
                 });
             }
         });
     }
 
     function stopAudioTracks() {
-        prankTracks.forEach(track => {
-            track.pause();
-            track.currentTime = 0;
+        audioElements.forEach(a => {
+            a.pause();
+            a.currentTime = 0;
         });
     }
 
