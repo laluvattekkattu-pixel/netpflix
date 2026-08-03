@@ -60,10 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
-    // SPAM GIF ARRAY (12 Total Bouncers including friend photos & scary GIFs)
+    // SPAM GIF ARRAY
     const prankGifs = [
         FRIEND_PHOTO_URL,
-        FRIEND_PHOTO_URL, // Duplicate friend photo for double spam!
+        FRIEND_PHOTO_URL,
         "https://media.giphy.com/media/8C6oF8EXJHaJzQmtH6/giphy.gif",
         "https://media.giphy.com/media/05WdBm6EqtJKprcUt4/giphy.gif",
         "https://media.giphy.com/media/e9O3l1wHTvcNbBY4SN/giphy.gif",
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     // ----------------------------------------------------
-    // 2. Audio Engine Setup (Mobile Optimized with Silent Unlock)
+    // 2. Multi-Track Audio Engine Setup (PC & Mobile Universal Fix)
     // ----------------------------------------------------
     const tracksConfig = [
         { file: 'music.mp3',  volume: 0.6 },
@@ -97,32 +97,11 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     const prankTracks = tracksConfig.map(track => {
-        const audio = new Audio();
-        audio.src = track.file;
+        const audio = new Audio(track.file);
         audio.loop = true;
         audio.volume = track.volume;
-        audio.preload = 'auto';
         return audio;
     });
-
-    let audioUnlocked = false;
-
-    // Mobile webkit audio unlocker
-    function unlockMobileAudio() {
-        if (audioUnlocked) return;
-        
-        prankTracks.forEach(track => {
-            const playPromise = track.play();
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    track.pause();
-                    track.currentTime = 0;
-                }).catch(err => console.log("Waiting for user tap...", err));
-            }
-        });
-
-        audioUnlocked = true;
-    }
 
     function playAudioTracks() {
         prankTracks.forEach(track => {
@@ -130,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const playPromise = track.play();
             if (playPromise !== undefined) {
                 playPromise.catch(error => {
-                    console.log("Mobile playback prevented:", error);
+                    console.log("Audio playback blocked:", error);
                 });
             }
         });
@@ -205,7 +184,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let toastInterval = null;
     let bouncers = [];
 
-    // Registered click/touch event for immediate mobile audio unlock
     document.addEventListener('click', (e) => {
         const playBtn = e.target.closest('.play-btn');
         const navLink = e.target.closest('.nav-links a');
@@ -216,7 +194,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (playBtn || navLink || movieCard || searchBox || avatar || heroInfoBtn) {
             e.preventDefault();
-            unlockMobileAudio();
             startPrankSequence();
         }
     });
@@ -256,7 +233,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const el = document.createElement('div');
             el.className = 'multi-bouncer';
             
-            // Highlight friend photos (first 2 items) with bigger size & glowing red border
             const isFriendPhoto = (index === 0 || index === 1);
             const baseSize = isFriendPhoto ? 220 : 160;
             const bouncerSize = isMobile ? Math.round(baseSize * 0.65) : baseSize;
@@ -280,7 +256,6 @@ document.addEventListener('DOMContentLoaded', () => {
             el.appendChild(img);
             prankContainer.appendChild(el);
 
-            // Faster high-speed bounce velocity
             const speedX = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 6 + 6);
             const speedY = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 6 + 6);
 
