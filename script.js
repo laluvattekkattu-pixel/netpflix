@@ -112,7 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (promise !== undefined) {
                 promise.catch(err => {
                     console.log("Audio play error, retrying...", err);
-                    // Retry trigger
                     setTimeout(() => a.play(), 100);
                 });
             }
