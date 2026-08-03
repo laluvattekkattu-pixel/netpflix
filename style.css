@@ -2,7 +2,7 @@
     --bg-primary: #141414;
     --bg-secondary: #1f1f1f;
     --accent-red: #e50914;
-    --horror-red: #8b0000;
+    --horror-red: #ff0000;
     --text-main: #ffffff;
     --text-muted: #aaaaaa;
     --card-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
@@ -356,27 +356,30 @@ body {
 
 .fullscreen-overlay.active {
     display: block;
-    animation: gentleGlitchShake 0.12s infinite alternate;
+    will-change: transform;
+    animation: intenseGlitchShake 0.05s infinite alternate;
 }
 
-/* Scary Dark Red Overlay (NO FLASH) */
+/* Scary Prank Screen Overlay with Red Blood Flicker & Glitch */
 .prank-container {
     position: absolute;
     inset: 0;
     display: none;
     overflow: hidden;
-    background: #0a0000; /* Solid dark background */
+    background: #000000;
 }
 
 .prank-container.active {
     display: block;
+    will-change: background-color;
+    animation: bloodFlicker 0.12s infinite alternate;
 }
 
 .prank-container::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle, rgba(139, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.98) 85%);
+    background: radial-gradient(circle, rgba(255, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.95) 80%);
     pointer-events: none;
     z-index: 10000;
 }
@@ -386,12 +389,12 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0.8);
-    background: rgba(100, 0, 0, 0.95);
-    border: 3px solid #ff0000;
+    background: rgba(220, 0, 0, 0.95);
+    border: 4px solid #ffffff;
     padding: 22px 35px;
     border-radius: 12px;
-    box-shadow: 0 0 50px rgba(255, 0, 0, 0.8);
-    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 0 80px rgba(255, 0, 0, 1), 0 0 40px rgba(255, 255, 255, 0.8);
+    transition: all 0.15s ease-out;
     z-index: 10002;
     opacity: 0;
     pointer-events: none;
@@ -399,17 +402,18 @@ body {
 }
 
 .toast-banner.show {
-    transform: translate(-50%, -50%) scale(1.1);
+    transform: translate(-50%, -50%) scale(1.15);
     opacity: 1;
+    animation: intenseGlitchShake 0.04s infinite alternate;
 }
 
 .toast-text {
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: 900;
     color: #ffffff;
     text-transform: uppercase;
     letter-spacing: 2px;
-    text-shadow: 0 0 10px #ff0000, 0 0 20px #000000;
+    text-shadow: 0 0 15px #ff0000, 0 0 30px #ffffff;
     white-space: pre-line;
 }
 
@@ -420,7 +424,7 @@ body {
     left: 50%;
     transform: translateX(-50%);
     background: rgba(0, 0, 0, 0.9);
-    border: 2px solid #ff0000;
+    border: 2px solid var(--horror-red);
     color: #ffffff;
     padding: 10px 24px;
     border-radius: 30px;
@@ -428,7 +432,7 @@ body {
     font-weight: 800;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.8);
     z-index: 10003;
     white-space: nowrap;
 }
@@ -440,13 +444,22 @@ body {
     z-index: 10001;
 }
 
-/* Subtle Screen Shake without color flashing */
-@keyframes gentleGlitchShake {
-    0% { transform: translate(0, 0) rotate(0deg); }
-    25% { transform: translate(-4px, 3px) rotate(-0.5deg); }
-    50% { transform: translate(4px, -3px) rotate(0.5deg); }
-    75% { transform: translate(-3px, -4px) rotate(-0.5deg); }
-    100% { transform: translate(3px, 4px) rotate(0.5deg); }
+/* High-Impact Scary Glitch & Blood Flicker Animations */
+@keyframes bloodFlicker {
+    0% { background-color: #ff0000; }
+    20% { background-color: #000000; }
+    40% { background-color: #660000; }
+    60% { background-color: #1a0000; }
+    80% { background-color: #cc0000; }
+    100% { background-color: #000000; }
+}
+
+@keyframes intenseGlitchShake {
+    0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+    25% { transform: translate(-12px, 10px) scale(1.04) rotate(-2deg); }
+    50% { transform: translate(12px, -10px) scale(0.96) rotate(2deg); }
+    75% { transform: translate(-10px, -12px) scale(1.05) rotate(-1.5deg); }
+    100% { transform: translate(10px, 12px) scale(1) rotate(1.5deg); }
 }
 
 /* Footer */
@@ -484,7 +497,7 @@ body {
     .nav-links { display: none; }
     .hero-title { font-size: 2.2rem; }
     .movie-card { flex: 0 0 130px; height: 195px; }
-    .toast-text { font-size: 1.2rem; }
+    .toast-text { font-size: 1.3rem; }
     .bottom-credit-bar {
         font-size: 0.75rem;
         padding: 8px 16px;
