@@ -5,7 +5,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // ----------------------------------------------------
-    // Friend Photo Configuration (Direct Imgur Link)
+    // Friend Photo Configuration (Direct Link)
     // ----------------------------------------------------
     const FRIEND_PHOTO_URL = "https://i.imgur.com/yFHCK6h.jpg"; 
 
@@ -60,9 +60,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
-    // Friend's photo + Scary Giphy GIFs
+    // SPAM GIF ARRAY (12 Total Bouncers including friend photos & scary GIFs)
     const prankGifs = [
         FRIEND_PHOTO_URL,
+        FRIEND_PHOTO_URL, // Duplicate friend photo for double spam!
+        "https://media.giphy.com/media/8C6oF8EXJHaJzQmtH6/giphy.gif",
+        "https://media.giphy.com/media/05WdBm6EqtJKprcUt4/giphy.gif",
+        "https://media.giphy.com/media/e9O3l1wHTvcNbBY4SN/giphy.gif",
+        "https://media.giphy.com/media/TC46tIxvGtSmbvTOl9/giphy.gif",
+        "https://media.giphy.com/media/BcX3ubwiEIZ89Vd0Ju/giphy.gif",
         "https://media.giphy.com/media/8C6oF8EXJHaJzQmtH6/giphy.gif",
         "https://media.giphy.com/media/05WdBm6EqtJKprcUt4/giphy.gif",
         "https://media.giphy.com/media/e9O3l1wHTvcNbBY4SN/giphy.gif",
@@ -81,26 +87,52 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     // ----------------------------------------------------
-    // 2. Multi-Track Audio Engine Setup
+    // 2. Audio Engine Setup (Mobile Optimized with Silent Unlock)
     // ----------------------------------------------------
     const tracksConfig = [
-        { file: 'music.mp3',  volume: 0.5 },
+        { file: 'music.mp3',  volume: 0.6 },
         { file: 'meme.mp3',   volume: 1.0 },
         { file: 'sound3.mp3', volume: 0.8 },
         { file: 'sound4.mp3', volume: 0.9 }
     ];
 
     const prankTracks = tracksConfig.map(track => {
-        const audio = new Audio(track.file);
+        const audio = new Audio();
+        audio.src = track.file;
         audio.loop = true;
         audio.volume = track.volume;
+        audio.preload = 'auto';
         return audio;
     });
+
+    let audioUnlocked = false;
+
+    // Mobile webkit audio unlocker
+    function unlockMobileAudio() {
+        if (audioUnlocked) return;
+        
+        prankTracks.forEach(track => {
+            const playPromise = track.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    track.pause();
+                    track.currentTime = 0;
+                }).catch(err => console.log("Waiting for user tap...", err));
+            }
+        });
+
+        audioUnlocked = true;
+    }
 
     function playAudioTracks() {
         prankTracks.forEach(track => {
             track.currentTime = 0;
-            track.play().catch(err => console.log("Audio play error:", err));
+            const playPromise = track.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log("Mobile playback prevented:", error);
+                });
+            }
         });
     }
 
@@ -173,6 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let toastInterval = null;
     let bouncers = [];
 
+    // Registered click/touch event for immediate mobile audio unlock
     document.addEventListener('click', (e) => {
         const playBtn = e.target.closest('.play-btn');
         const navLink = e.target.closest('.nav-links a');
@@ -183,6 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (playBtn || navLink || movieCard || searchBox || avatar || heroInfoBtn) {
             e.preventDefault();
+            unlockMobileAudio();
             startPrankSequence();
         }
     });
@@ -209,12 +243,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----------------------------------------------------
-    // 5. Multi-GIF Bouncing Physics System (Friend Photo + GIFs)
+    // 5. Multi-GIF High-Speed Spam Physics Engine
     // ----------------------------------------------------
     function initMultipleBouncingGifs() {
-        const bouncingWrapper = document.getElementById('bouncingWrapper');
-        if (bouncingWrapper) bouncingWrapper.style.display = 'none';
-
         document.querySelectorAll('.multi-bouncer').forEach(el => el.remove());
 
         bouncers = [];
@@ -225,9 +256,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const el = document.createElement('div');
             el.className = 'multi-bouncer';
             
-            const isFriendPhoto = (index === 0);
-            const baseSize = isFriendPhoto ? 250 : 180;
-            const bouncerSize = isMobile ? Math.round(baseSize * 0.7) : baseSize;
+            // Highlight friend photos (first 2 items) with bigger size & glowing red border
+            const isFriendPhoto = (index === 0 || index === 1);
+            const baseSize = isFriendPhoto ? 220 : 160;
+            const bouncerSize = isMobile ? Math.round(baseSize * 0.65) : baseSize;
 
             el.style.position = 'absolute';
             el.style.width = `${bouncerSize}px`;
@@ -242,14 +274,15 @@ document.addEventListener('DOMContentLoaded', () => {
             img.style.height = '100%';
             img.style.objectFit = 'cover';
             img.style.borderRadius = '16px';
-            img.style.border = isFriendPhoto ? '3px solid #ff0000' : 'none';
-            img.style.filter = 'drop-shadow(0 0 25px rgba(255, 0, 0, 0.9))';
+            img.style.border = isFriendPhoto ? '4px solid #ff0000' : 'none';
+            img.style.filter = 'drop-shadow(0 0 25px rgba(255, 0, 0, 1))';
 
             el.appendChild(img);
             prankContainer.appendChild(el);
 
-            const speedX = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 4 + 4);
-            const speedY = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 4 + 4);
+            // Faster high-speed bounce velocity
+            const speedX = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 6 + 6);
+            const speedY = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 6 + 6);
 
             bouncers.push({
                 element: el,
@@ -307,12 +340,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             setTimeout(() => {
                 toastBanner.classList.remove('show');
-            }, 2000);
+            }, 1800);
         }
 
         triggerToast();
         clearInterval(toastInterval);
-        toastInterval = setInterval(triggerToast, 2800);
+        toastInterval = setInterval(triggerToast, 2400);
     }
 
     function exitPrankSequence() {
@@ -333,7 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----------------------------------------------------
-    // 6. Confetti Particle System (Blood Red Theme)
+    // 6. Particle System
     // ----------------------------------------------------
     const canvas = document.getElementById('confettiCanvas');
     const ctx = canvas.getContext('2d');
@@ -348,7 +381,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', resizeCanvas);
 
     function createParticle() {
-        const colors = ['#ff0000', '#990000', '#660000', '#ff4d4d', '#000000'];
+        const colors = ['#ff0000', '#990000', '#660000', '#ff4d4d', '#000000', '#ffffff'];
         return {
             x: Math.random() * canvas.width,
             y: -20,
